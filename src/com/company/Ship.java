@@ -69,4 +69,5 @@ public class Ship implements Serializable {
         }
         System.out.println(shipsP1);
     }
+
 }

@@ -28,7 +28,6 @@ public class Board implements Serializable {
 
         for (int j = 1; j < dim; j++)
             board[0][j] = String.valueOf(j).charAt(0);
-
     }
 
     public void printBoard() {
@@ -39,7 +38,6 @@ public class Board implements Serializable {
             }
             System.out.println("\n");
         }
-
     }
 
     void updateBoard(int x, int y) {

@@ -55,8 +55,8 @@ public class Server {
         ByteArrayInputStream in = new ByteArrayInputStream(data);
 
         try {
-            ObjectInputStream ois = new ObjectInputStream(in);
-            move = (Move) ois.readObject();
+            ObjectInputStream objectInputStream = new ObjectInputStream(in);
+            move = (Move) objectInputStream.readObject();
 
             if(turn == -1 || turn == move.numPlayer) {
                 if (move.numPlayer == 1) {
@@ -82,10 +82,10 @@ public class Server {
             e.printStackTrace();
         }
 
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = null;
         try {
-            objectOutputStream = new ObjectOutputStream(os);
+            objectOutputStream = new ObjectOutputStream(outputStream);
             if(move.numPlayer == 1) {
                 objectOutputStream.writeObject(board2);
             } else {
@@ -95,8 +95,8 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        byte[] resposta = os.toByteArray();
-        return resposta;
+        byte[] reply = outputStream.toByteArray();
+        return reply;
     }
 
     public static void main(String[] args) {

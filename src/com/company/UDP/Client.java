@@ -24,6 +24,7 @@ public class Client {
 
         try {
             destAddr = InetAddress.getByName(ipServer);
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -36,10 +37,10 @@ public class Client {
     public void runClient() throws IOException {
         byte [] receivedData = new byte[1024];
 
-        System.out.println("Número jugador (1 o 2):");
+        System.out.println("Número jugador (1-2):");
         numPlayer = scanner.nextInt();
 
-        System.out.println("Hola " + name + "! Comenzamos! ");
+        System.out.println("Hola " + name + "!");
         do {
             System.out.println("Indica la posición X y la posición Y: ");
             int posX = scanner.nextInt();
@@ -49,16 +50,17 @@ public class Client {
             move.setX(posX);
             move.setY(posY);
 
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = null;
             try {
-                objectOutputStream = new ObjectOutputStream(os);
+                objectOutputStream = new ObjectOutputStream(outputStream);
                 objectOutputStream.writeObject(move);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            byte[] message = os.toByteArray();
+            byte[] message = outputStream.toByteArray();
 
             DatagramPacket packet = new DatagramPacket(message,message.length, destAddr, destPort); // Se crea el paquete a enviar
             DatagramSocket socket = new DatagramSocket(); // Se crea un socket temporal con el que realiza el envío
@@ -69,18 +71,19 @@ public class Client {
             packet = new DatagramPacket(receivedData, 1024); // Se crea un paquete para recibir la información
             socket.setSoTimeout(5000); // Tiempo de espera
 
-            ByteArrayInputStream in = new ByteArrayInputStream(packet.getData());
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(packet.getData());
             try {
                 socket.receive(packet);
 
-                ObjectInputStream objectInputStream = new ObjectInputStream(in);
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 board = (Board) objectInputStream.readObject();
                 if (!board.availableTurn) {
-                    System.out.println("Esperando a tu oponente...");
+                    System.out.println("Esperando al oponente...");
                 } else {
                     matchState = board.gameState();
                     board.printBoard();
                 }
+
             } catch (SocketTimeoutException e) {
                 System.out.println("No hay respuesta del servidor: " + e.getMessage());
             } catch (ClassNotFoundException e) {
@@ -104,9 +107,11 @@ public class Client {
         client.setName(player);
         try {
             client.runClient();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         System.out.println("VICTORIA !!");
     }
 }
