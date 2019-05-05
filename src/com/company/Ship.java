@@ -56,16 +56,16 @@ public class Ship implements Serializable {
 
                 if (shipsP1 == 0){
                     defeat = false;
-                    System.out.println("Victory!");
+                    System.out.println("VICTORIA !");
                     board1.matchState(defeat);
                 }
             } else {
                 board1.updateBoard(x, y);
-                System.out.println("Has fallado.");
+                System.out.println("Has fallado");
                 board1.matchState(defeat);
             }
         } else {
-            System.out.println("Valor incorrecto.");
+            System.out.println("Valor no válido");
         }
         System.out.println(shipsP1);
     }

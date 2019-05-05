@@ -47,13 +47,11 @@ public class Board implements Serializable {
     }
 
     void addShipP1(int x, int y){
-        board[x][y] = 'b';
+        board[x][y] = 'x';
     }
-
     void addShipP2(int x, int y){
-        board[x][y] = 'b';
+        board[x][y] = 'x';
     }
-    //
 
     public void matchState(boolean state) {
         this.state = state;
